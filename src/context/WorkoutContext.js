@@ -60,8 +60,59 @@ export function WorkoutProvider({ children }) {
         );
     }
 
+    /**
+     * Adds a superset entry: { type:'superset', id, rest, exerciseA:{id,...}, exerciseB:{id,...} }
+     * @param {string} planId
+     * @param {{ exerciseA: object, exerciseB: object, rest: number }} data
+     */
+    function addSuperset(planId, data) {
+        const entry = {
+            id: crypto.randomUUID(),
+            type: 'superset',
+            rest: data.rest,
+            exerciseA: { id: crypto.randomUUID(), notes: '', ...data.exerciseA },
+            exerciseB: { id: crypto.randomUUID(), notes: '', ...data.exerciseB },
+        };
+        setPlans((prev) =>
+            prev.map((p) =>
+                p.id === planId ? { ...p, exercises: [...p.exercises, entry] } : p
+            )
+        );
+    }
+
+    /** @param {string} planId @param {string} ssId @param {'exerciseA'|'exerciseB'} side @param {object} updates */
+    function updateSupersetExercise(planId, ssId, side, updates) {
+        setPlans((prev) =>
+            prev.map((p) =>
+                p.id === planId
+                    ? {
+                        ...p,
+                        exercises: p.exercises.map((e) =>
+                            e.id === ssId ? { ...e, [side]: { ...e[side], ...updates } } : e
+                        ),
+                    }
+                    : p
+            )
+        );
+    }
+
+    /** @param {string} planId @param {string} ssId @param {number} rest */
+    function updateSupersetRest(planId, ssId, rest) {
+        setPlans((prev) =>
+            prev.map((p) =>
+                p.id === planId
+                    ? { ...p, exercises: p.exercises.map((e) => (e.id === ssId ? { ...e, rest } : e)) }
+                    : p
+            )
+        );
+    }
+
     return (
-        <WorkoutContext.Provider value={{ plans, addPlan, updatePlan, deletePlan, addExercise, updateExercise, deleteExercise }}>
+        <WorkoutContext.Provider value={{
+            plans, addPlan, updatePlan, deletePlan,
+            addExercise, updateExercise, deleteExercise,
+            addSuperset, updateSupersetExercise, updateSupersetRest,
+        }}>
             {children}
         </WorkoutContext.Provider>
     );

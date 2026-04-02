@@ -1,9 +1,18 @@
 // features/progress/WeightChart.js — Line chart for body weight over time.
-// Uses the same chart.js setup as ProgressChart.
-// Receives weightLog array: [{ date, weight }].
 
 import React from 'react';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Tooltip,
+    Legend,
+} from 'chart.js';
 import { Line } from 'react-chartjs-2';
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 /** @param {{ weightLog: Array<{ date: string, weight: number }> }} props */
 function WeightChart({ weightLog = [] }) {
@@ -29,7 +38,7 @@ function WeightChart({ weightLog = [] }) {
         },
     };
 
-    if (!weightLog.length) return <p className="text-muted small">Nessun dato di peso registrato.</p>;
+    if (!weightLog.length) return <p className="text-light small opacity-75">Nessun dato di peso registrato.</p>;
 
     return <Line data={data} options={options} />;
 }

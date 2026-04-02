@@ -3,7 +3,7 @@
 // Collapses on mobile; controlled by isOpen prop.
 // Uses Bootstrap nav classes and Bootstrap Icons for link icons.
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const links = [
@@ -14,6 +14,12 @@ const links = [
 ];
 
 function Sidebar({ isOpen, onClose }) {
+    // Lock body scroll when the off-canvas drawer is open on mobile
+    useEffect(() => {
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+    }, [isOpen]);
+
     return (
         <>
             {/* Backdrop for mobile */}
@@ -26,10 +32,20 @@ function Sidebar({ isOpen, onClose }) {
             )}
 
             <nav className={`gym-sidebar d-flex flex-column p-3 ${isOpen ? 'open' : ''}`}>
-                <span className="fs-5 fw-bold text-white mb-4 px-2">
-                    <i className="bi bi-activity me-2 text-primary" />
-                    Gym App
-                </span>
+                <div className="d-flex align-items-center justify-content-between mb-4">
+                    <span className="fs-5 fw-bold text-white px-2">
+                        <i className="bi bi-activity me-2 text-primary" />
+                        Gym App
+                    </span>
+                    {/* Close button — visible only on mobile */}
+                    <button
+                        className="btn btn-sm btn-dark d-md-none"
+                        onClick={onClose}
+                        aria-label="Chiudi menu"
+                    >
+                        <i className="bi bi-x-lg" />
+                    </button>
+                </div>
                 <ul className="nav nav-pills flex-column gap-1">
                     {links.map(({ to, icon, label }) => (
                         <li key={to} className="nav-item">
