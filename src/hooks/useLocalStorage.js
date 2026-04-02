@@ -1,8 +1,14 @@
 // hooks/useLocalStorage.js — Generic hook for persisting state in localStorage.
-// Usage: const [value, setValue] = useLocalStorage('key', initialValue);
-// Behaves like useState but reads/writes to window.localStorage.
+//
+// Usage:
+//   const [value, setValue, removeValue] = useLocalStorage('key', initialValue);
+//
+// Returns a tuple:
+//   [0] value        — current state (mirrors localStorage)
+//   [1] setValue(v)  — update state and persist to localStorage
+//   [2] removeValue()— delete the key from localStorage and reset to initialValue
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 function useLocalStorage(key, initialValue) {
     const [storedValue, setStoredValue] = useState(() => {
@@ -14,15 +20,27 @@ function useLocalStorage(key, initialValue) {
         }
     });
 
+    // Persist on every change
     useEffect(() => {
         try {
             window.localStorage.setItem(key, JSON.stringify(storedValue));
         } catch {
-            // quota exceeded or private browsing — fail silently
+            // Quota exceeded or private browsing — fail silently
         }
     }, [key, storedValue]);
 
-    return [storedValue, setStoredValue];
+    // Remove the key from localStorage and reset state to initialValue
+    const removeValue = useCallback(() => {
+        try {
+            window.localStorage.removeItem(key);
+        } catch {
+            // fail silently
+        }
+        setStoredValue(initialValue);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [key]);
+
+    return [storedValue, setStoredValue, removeValue];
 }
 
 export default useLocalStorage;

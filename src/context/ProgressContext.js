@@ -7,13 +7,14 @@
 
 import React, { createContext, useContext } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import KEYS from '../services/storageKeys';
 
 const ProgressContext = createContext(null);
 
 export function ProgressProvider({ children }) {
-    const [trackingEnabled, setTrackingEnabled] = useLocalStorage('gym_tracking_enabled', false);
-    const [progress, setProgress] = useLocalStorage('gym_progress', {});
-    const [weightLog, setWeightLog] = useLocalStorage('gym_weight_log', []);
+    const [trackingEnabled, setTrackingEnabled] = useLocalStorage(KEYS.TRACKING_ENABLED, false);
+    const [progress, setProgress] = useLocalStorage(KEYS.PROGRESS, {});
+    const [weightLog, setWeightLog] = useLocalStorage(KEYS.WEIGHT_LOG, []);
 
     /** @param {string} exerciseId @param {number} load */
     function recordLoad(exerciseId, load) {

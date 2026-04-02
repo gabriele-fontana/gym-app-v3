@@ -3,9 +3,10 @@
 // A session: { planId, planName, date, exercises: [...] }
 
 import useLocalStorage from './useLocalStorage';
+import KEYS from '../services/storageKeys';
 
 export function useCalendar() {
-    const [sessions, setSessions] = useLocalStorage('gym_sessions', {});
+    const [sessions, setSessions] = useLocalStorage(KEYS.SESSIONS, {});
 
     /** @param {string} date YYYY-MM-DD @param {object} session */
     function addSession(date, session) {

@@ -5,11 +5,12 @@
 
 import React, { createContext, useContext } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import KEYS from '../services/storageKeys';
 
 const WorkoutContext = createContext(null);
 
 export function WorkoutProvider({ children }) {
-    const [plans, setPlans] = useLocalStorage('gym_plans', []);
+    const [plans, setPlans] = useLocalStorage(KEYS.PLANS, []);
 
     /** @param {{ name: string }} planData */
     function addPlan(planData) {
