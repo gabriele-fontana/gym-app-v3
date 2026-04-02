@@ -3,7 +3,7 @@
 // The Layout component renders the Sidebar + Header shell around page content.
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import EditPlans from './pages/EditPlans';
 import Workout from './pages/Workout';
