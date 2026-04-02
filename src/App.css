@@ -27,7 +27,6 @@ body {
   background-color: var(--gym-surface);
   border-right: 1px solid var(--gym-border);
   flex-shrink: 0;
-  transition: width 0.3s ease;
 }
 
 .gym-main {
@@ -45,17 +44,20 @@ body {
   border-radius: 0.5rem;
 }
 
-/* Responsive sidebar collapse */
+/* Responsive sidebar — off-canvas drawer on mobile */
 @media (max-width: 768px) {
   .gym-sidebar {
-    width: 0;
-    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: var(--sidebar-width);
+    z-index: 1050;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
   }
 
   .gym-sidebar.open {
-    width: var(--sidebar-width);
-    position: fixed;
-    height: 100vh;
-    z-index: 1050;
+    transform: translateX(0);
   }
 }
