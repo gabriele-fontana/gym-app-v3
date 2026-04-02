@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Gym App",
+  "name": "Gym App — Workout Tracker",
+  "description": "Track your workouts, exercises, and progress offline.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,18 +9,30 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "icons/iconx48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "icons/iconx192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "icons/iconx512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "orientation": "portrait",
+  "theme_color": "#121212",
+  "background_color": "#121212",
+  "categories": [
+    "health",
+    "fitness",
+    "sports"
+  ]
 }
