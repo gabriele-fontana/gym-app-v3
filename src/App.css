@@ -1,0 +1,61 @@
+/* App.css — Global styles for the gym app.
+   Dark theme base, sidebar layout overrides, and utility classes.
+   Bootstrap handles most styling; add only project-specific overrides here. */
+
+:root {
+  --gym-bg: #121212;
+  --gym-surface: #1e1e1e;
+  --gym-border: #2c2c2c;
+  --gym-accent: #0d6efd;
+  --gym-text: #e0e0e0;
+  --sidebar-width: 240px;
+}
+
+body {
+  background-color: var(--gym-bg);
+  color: var(--gym-text);
+}
+
+/* Sidebar layout */
+.gym-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.gym-sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--gym-surface);
+  border-right: 1px solid var(--gym-border);
+  flex-shrink: 0;
+  transition: width 0.3s ease;
+}
+
+.gym-main {
+  flex: 1;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Cards */
+.exercise-card {
+  background-color: var(--gym-surface);
+  border: 1px solid var(--gym-border);
+  border-radius: 0.5rem;
+}
+
+/* Responsive sidebar collapse */
+@media (max-width: 768px) {
+  .gym-sidebar {
+    width: 0;
+    overflow: hidden;
+  }
+
+  .gym-sidebar.open {
+    width: var(--sidebar-width);
+    position: fixed;
+    height: 100vh;
+    z-index: 1050;
+  }
+}
